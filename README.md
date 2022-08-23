@@ -2,7 +2,7 @@
 
 ## Simulating the costs ##
 
-The aim of this project is studying the evolution of the epidemics in a population of $1000$ individuals using the $SIR$ model and finding the configuration that leads to the minimum cost.
+This project aims to study the evolution of the epidemics in a population of $1000$ individuals using the $SIR$ model and find the configuration that leads to the minimum cost.
 
 Firstly, we simulated the number of infections in the first $60$ days, starting from $S_0 = 999$, $I_0 = 1$. Every individual in $S$ has a small probability $p$ to get infected by an individual in $I$ and all the individuals in $I$ at time $t$ get removed at time $t + 1$. So, we could say that the number of infected people at time $t + 1$ is a random variable distributed as a binomial distribution
 
@@ -14,7 +14,7 @@ $$ S(t+1)=S(t)-I(t+1). $$
 
 Secondly, containment measures that vary the value of $p$ between $0.003$ and $0.0005$ were introduced. The evolution of the epidemics was simulated as described above for $11$ different values of $p$ in the interval of interest. Since the sanitary cost is unitary for every infected person the average cost of health $\mathrm{E}_p[c_h]= \mathrm{E}_p[I(60)+R(60)]= N-\mathrm{E}_p[S(60))]$.
 
-Lastly, since for every containment measure level it is possible to write the economic cost $c_e(p)=\left(\frac{0.003}{p}\right)^{9}-1$, we computed corresponding average cost as the sum of cost of health and economic cost.
+Lastly, since for every containment measure level it is possible to write the economic cost $c_e(p)=\left(\frac{0.003}{p}\right)^{9}-1$, we computed the corresponding average cost as the sum of the cost of health and the economic cost.
 
 ## Training the Neural Network ##
 
@@ -27,7 +27,7 @@ We used a non-linear neural network with:
 
 *Here is an example of a non-linear neural network with $H=3$ hidden nodes.*
 
-To manage nonlinearity, we had to use an activation function to transform the input of the second layer to its output. We have chosen the sigmoid function
+To manage nonlinearity, we had to use an activation function to transform the input of the second layer into its output. We have chosen the sigmoid function
 
 $$ \Sigma(x)=\frac{1}{1+e^{-x}}, $$
 
@@ -41,7 +41,7 @@ Firstly, we had to choose an updating rule for the stepsize considering that app
 
 $$ \mu(m)=\frac{A}{B+m}. $$
 
-We did a grid search on the possible values of $A$ and $B$ and we obtained good results using $A=5000$ and $B=100000$. Smaller values of $\mu$ leads to a non-convergent algorithm and larger values often had as a result an explosion of the weights. 
+We did a grid search on the possible values of $A$ and $B$ and we obtained good results using $A=5000$ and $B=100000$. Smaller values of $\mu$ lead to a non-convergent algorithm and larger values often had, as a result, an explosion of the weights. 
 
 ![](images/mu.png?raw=true)
 
@@ -81,5 +81,5 @@ Finally, we observed that the first $2$ points had a much bigger value than the 
 
 *Final model trained using 9 points instead of 11.*
 
-By evaluating the resulting function, we found that the minimum cost is approximately $612$ and correspond to a value of $p=0.00166$.
+By evaluating the resulting function, we found that the minimum cost is approximately $612$ and corresponds to a value of $p=0.00166$.
 
