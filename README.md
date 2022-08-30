@@ -2,8 +2,7 @@
 
 ## Simulating the costs ##
 
-This project aims to study the evolution of the epidemics in a population of $1000$ individuals using the $SIR$ model and find the configuration that leads to the minimum cost.
-
+This project aims to study the evolution of the epidemics in a population of $1000$ individuals using the $SIR$ model and find the configuration that leads to the minimum cost.  
 Firstly, we simulated the number of infections in the first $60$ days, starting from $S_0 = 999$, $I_0 = 1$. Every individual in $S$ has a small probability $p$ to get infected by an individual in $I$ and all the individuals in $I$ at time $t$ get removed at time $t + 1$. So, we could say that the number of infected people at time $t + 1$ is a random variable distributed as a binomial distribution
 
 $$ I(t+1)\sim Bin(S_t, 1-(1-p)^{I(t)}). $$
@@ -12,8 +11,7 @@ Consequently, the number of susceptible people at time $t+1$ is
 
 $$ S(t+1)=S(t)-I(t+1). $$
 
-Secondly, containment measures that vary the value of $p$ between $0.003$ and $0.0005$ were introduced. The evolution of the epidemics was simulated as described above for $11$ different values of $p$ in the interval of interest. Since the sanitary cost is unitary for every infected person the average cost of health $\mathrm{E}_p[c_h]= \mathrm{E}_p[I(60)+R(60)]= N-\mathrm{E}_p[S(60))]$.
-
+Secondly, containment measures that vary the value of $p$ between $0.003$ and $0.0005$ were introduced. The evolution of the epidemics was simulated as described above for $11$ different values of $p$ in the interval of interest. Since the sanitary cost is unitary for every infected person the average cost of health $\mathrm{E}_p[c_h]= \mathrm{E}_p[I(60)+R(60)]= N-\mathrm{E}_p[S(60))]$.  
 Lastly, since for every containment measure level it is possible to write the economic cost $c_e(p)=\left(\frac{0.003}{p}\right)^{9}-1$, we computed the corresponding average cost as the sum of the cost of health and the economic cost.
 
 ## Training the Neural Network ##
@@ -25,14 +23,13 @@ We used a non-linear neural network with:
 
 ![](images/NN.png?raw=true)
 
-*Here is an example of a non-linear neural network with $H=3$ hidden nodes.*
+*Here is an example of a non-linear neural network with* $H=3$ *hidden nodes.*
 
 To manage nonlinearity, we had to use an activation function to transform the input of the second layer into its output. We have chosen the sigmoid function
 
 $$ \Sigma(x)=\frac{1}{1+e^{-x}}, $$
 
-since it is a typical choice and we obtained good results using it.
-
+since it is a typical choice and we obtained good results using it.  
 We noticed that the values of $p$ were very small and those of $c$ were large. These may lead to the explosion of the weights ($w$ and $k$) in the back-propagation algorithm, therefore we decided to normalize both the vector $p$ and the vector $c$ before running the algorithm.
 
 ### Tuning Parameters ###
@@ -45,7 +42,7 @@ We did a grid search on the possible values of $A$ and $B$ and we obtained good 
 
 ![](images/mu.png?raw=true)
 
-*Value of the stepsize $\mu$ with increasing $m$.*
+*Value of the stepsize* $\mu$ *with increasing* $m$*.*
 
 Secondly, we observed how varies the value of $SSE$, where
 
@@ -55,7 +52,7 @@ and $o_p$ is the output of the network corresponding to point $p$. We noticed th
 
 ![](images/SSE.png?raw=true)
 
-*As shown on the left, the values of $SSE$ in the first $10000$ iterations are unstable, after this, as shown on the right, the evolution becomes more regular.*
+*As shown on the left, the values of* $SSE$ *in the first* $10000$ *iterations are unstable, after this, as shown on the right, the evolution becomes more regular.*
 
 Lastly, we had to choose a stopping criterion and we decided to evaluate the relative differences, that is
 
@@ -65,7 +62,7 @@ We grid searched the optimal value of $tol$. In particular, we observed that for
 
 ![](images/11_3.png?raw=true)
 
-*In the figures are shown the approximating functions obtained by using $tol = 10^{-6}$ on the left and $tol = 10^{-7}$ on the right.*
+*In the figures are shown the approximating functions obtained by using* $tol = 10^{-6}$ *on the left and* $tol = 10^{-7}$ *on the right.*
 
 ## Conclusions ##
 
@@ -73,7 +70,7 @@ After tuning all the parameters, the minimum cost achieved was about $-173000$ w
 
 ![](images/11_H.png?raw=true)
 
-*In the figures is shown the minimum cost achieved by using a neural network with $H=5$ hidden nodes on the left and $H=9$ nodes on the right.*
+*In the figures is shown the minimum cost achieved by using a neural network with* $H=5$ *hidden nodes on the left and* $H=9$ *nodes on the right.*
 
 Finally, we observed that the first $2$ points had a much bigger value than the others and, probably, by fitting those $2$ points too well the model ends up not being accurate when doing predictions. Accordingly, we tried running the back-propagation algorithm with the $9$ nodes in the interval $[0.001;0.003]$, and we get the final results in the figure below. 
 
